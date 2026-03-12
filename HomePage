@@ -1,0 +1,84 @@
+PImage bgImage;
+
+// Menu button hover states
+boolean flightsHover = false;
+boolean faqHover = false;
+boolean emissionsHover = false;
+
+void setup() {
+  size(1200, 800);
+  bgImage = loadImage("airhostessImage.jpg");
+}
+
+void draw() {
+  // Background image
+  image(bgImage, 0, 0, width, height);
+  
+  // Logo
+  fill(255);
+  textSize(28);
+  textAlign(LEFT, CENTER);
+  text("FEMirates", 30, 35);
+  
+  // Check hover states
+  checkMenuHovers();
+  
+  // Menu buttons
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  
+  // Flights button
+  if (flightsHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("Flights", width - 350, 35);
+  
+  // FAQ button
+  if (faqHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("FAQ", width - 220, 35);
+  
+  // Emissions Data button
+  if (emissionsHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("Emissions Data", width - 80, 35);
+  
+  // Welcome text box
+  fill(255, 105, 180, 120);
+  rectMode(CENTER);
+  rect(width/2, height/2 + 150, 500, 150, 20);
+  
+  fill(255);
+  textSize(36);
+  text("Welcome to FEMirates", width/2, height/2 + 130);
+  textSize(18);
+  text("Your journey begins here", width/2, height/2 + 180);
+  
+  rectMode(CORNER);
+}
+
+void checkMenuHovers() {
+  flightsHover = (mouseX > width - 400 && mouseX < width - 300 && mouseY < 70);
+  faqHover = (mouseX > width - 260 && mouseX < width - 180 && mouseY < 70);
+  emissionsHover = (mouseX > width - 160 && mouseX < width && mouseY < 70);
+}
+
+void mousePressed() {
+  if (flightsHover) {
+    println("Flights clicked - navigate to flights page");
+  }
+  if (faqHover) {
+    println("FAQ clicked - navigate to FAQ page");
+  }
+  if (emissionsHover) {
+    println("Emissions Data clicked - navigate to emissions page");
+  }
+}
