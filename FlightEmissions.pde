@@ -1,14 +1,7 @@
-// Flight CO2 Emissions by Airline
-// Data: Jan 1-6, 2022 | Factor: 0.0001 tonnes CO2 per mile per flight
-
-// --- DATA ---
-// Each entry: {date, carrier, distance}
-// CO2 (tonnes) = distance * 0.0001
-
 String[] carriers = {"AA", "AS", "B6", "DL", "F9", "G4", "HA", "NK", "UA", "WN"};
 
-// Raw flight distances per carrier (miles), summed from dataset
-// Computed: sum of all distance values per carrier across Jan 1-6
+// flight distances per carrier (miles)
+// sum of all distance values per carrier
 float[] totalMiles = {
   // AA - American Airlines
   132047,
@@ -34,16 +27,16 @@ float[] totalMiles = {
 
 // Colors per airline (RGB)
 int[][] airlineColors = {
-  {55, 138, 221},   // AA - blue
-  {29, 158, 117},   // AS - teal
-  {216, 90, 48},    // B6 - orange
-  {127, 119, 221},  // DL - purple
-  {153, 60, 29},    // F9 - brown-red
-  {15, 110, 86},    // G4 - dark teal
-  {212, 83, 126},   // HA - pink
-  {186, 117, 23},   // NK - amber
-  {83, 74, 183},    // UA - indigo
-  {226, 75, 74}     // WN - red
+  {230, 230, 230},   // AA - light grey
+  {255, 210, 210},   // AS - light pink
+  {255, 195, 195},    // B6 - dark pink
+  {210, 210, 210},  // DL - grey
+  {255, 180, 180},    // F9 - pink
+  {230, 230, 230},    // G4 - light grey
+  {255, 195, 195},   // HA - pink
+  {255, 210, 210},   // NK - light pink
+  {255, 195, 195},    // UA - dark pink
+  {255, 180, 180}     // WN - red
 };
 
 float CO2_FACTOR = 0.0001;
@@ -78,7 +71,6 @@ void setup() {
 void draw() {
   background(250);
 
-  // --- Title ---
   fill(30);
   textSize(16);
   textAlign(CENTER, TOP);
@@ -87,7 +79,7 @@ void draw() {
   fill(120);
   text("Jan 1\u20136, 2022  \u2022  CO\u2082 (tonnes) = distance (mi) \u00d7 0.0001", width / 2, 42);
 
-  // --- Grid lines ---
+  // Grid lines
   int gridCount = 5;
   stroke(200);
   strokeWeight(0.8);
@@ -113,7 +105,7 @@ void draw() {
   text("CO\u2082 (tonnes)", 0, 0);
   popMatrix();
 
-  // --- Bars ---
+  // Bars
   for (int i = 0; i < carriers.length; i++) {
     float x = margin + barGap * i + (barGap - barW) / 2;
     float barH = map(co2Values[i], 0, maxCO2, 0, chartBottom - chartTop);
@@ -137,18 +129,12 @@ void draw() {
     text(carriers[i], x + barW / 2, chartBottom + 8);
   }
 
-  // --- Axes ---
+  // Axes 
   stroke(180);
   strokeWeight(1);
   line(margin, chartTop, margin, chartBottom);
   line(margin, chartBottom, width - margin, chartBottom);
 
-  // --- Methodology note ---
-  fill(160);
-  textSize(10);
-  textAlign(LEFT, BOTTOM);
-  noStroke();
-  text("Methodology: ICAO simplified factor, excludes load factor and aircraft type.", margin, height - 10);
 
   noLoop();
 }
