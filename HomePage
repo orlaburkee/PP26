@@ -4,21 +4,41 @@ PImage bgImage;
 boolean flightsHover = false;
 boolean faqHover = false;
 boolean emissionsHover = false;
+boolean statisticsMenuHover = false;
+boolean emissionsDataHover = false;
+boolean cancelledOrDelayedHover = false;
+boolean heatMapHover = false;
+
+float statisticsMenuX;
+float statisticsMenuY = 70;
+float statisticsMenuW = 220;
+float statisticsOptionH = 40;
 
 void setup() {
   size(1200, 800);
-  bgImage = loadImage("airhostessImage.jpg");
+  bgImage = loadImage("Emirates.jpg");
+  statisticsMenuX = width - 220;
 }
 
 void draw() {
   // Background image
   image(bgImage, 0, 0, width, height);
+
+  // Header bar
+  fill(0, 0, 0, 120);
+  noStroke();
+  rect(0, 0, width, 70);
   
   // Logo
   fill(255);
   textSize(28);
   textAlign(LEFT, CENTER);
   text("FEMirates", 30, 35);
+
+  // Header title
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text("FEMirates Flight Portal", width/2, 35);
   
   // Check hover states
   checkMenuHovers();
@@ -49,18 +69,24 @@ void draw() {
   } else {
     fill(255);
   }
-  text("Emissions Data", width - 80, 35);
+  text("Statistics", width - 80, 35);
+
+  // Statistics dropdown menu
+  if (emissionsHover || statisticsMenuHover) {
+    drawStatisticsMenu();
+  }
   
   // Welcome text box
   fill(255, 105, 180, 120);
   rectMode(CENTER);
-  rect(width/2, height/2 + 150, 500, 150, 20);
+  rect(width/2, height/2 + 230, 640, 220, 20);
   
   fill(255);
-  textSize(36);
-  text("Welcome to FEMirates", width/2, height/2 + 130);
-  textSize(18);
-  text("Your journey begins here", width/2, height/2 + 180);
+  textAlign(CENTER, CENTER);
+  textSize(48);
+  text("Welcome to FEMirates", width/2, height/2 + 200);
+  textSize(26);
+  text("Your journey begins here", width/2, height/2 + 260);
   
   rectMode(CORNER);
 }
@@ -69,6 +95,50 @@ void checkMenuHovers() {
   flightsHover = (mouseX > width - 400 && mouseX < width - 300 && mouseY < 70);
   faqHover = (mouseX > width - 260 && mouseX < width - 180 && mouseY < 70);
   emissionsHover = (mouseX > width - 160 && mouseX < width && mouseY < 70);
+
+  float menuBottom = statisticsMenuY + (statisticsOptionH * 3);
+  statisticsMenuHover = (mouseX > statisticsMenuX && mouseX < statisticsMenuX + statisticsMenuW && mouseY > statisticsMenuY && mouseY < menuBottom);
+
+  emissionsDataHover = (mouseX > statisticsMenuX && mouseX < statisticsMenuX + statisticsMenuW && mouseY > statisticsMenuY && mouseY < statisticsMenuY + statisticsOptionH);
+  cancelledOrDelayedHover = (mouseX > statisticsMenuX && mouseX < statisticsMenuX + statisticsMenuW && mouseY > statisticsMenuY + statisticsOptionH && mouseY < statisticsMenuY + (statisticsOptionH * 2));
+  heatMapHover = (mouseX > statisticsMenuX && mouseX < statisticsMenuX + statisticsMenuW && mouseY > statisticsMenuY + (statisticsOptionH * 2) && mouseY < menuBottom);
+}
+
+void drawStatisticsMenu() {
+  float menuBottom = statisticsMenuY + (statisticsOptionH * 3);
+
+  noStroke();
+  fill(0, 0, 0, 180);
+  rect(statisticsMenuX, statisticsMenuY, statisticsMenuW, statisticsOptionH * 3, 8);
+
+  textAlign(LEFT, CENTER);
+  textSize(16);
+
+  if (emissionsDataHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("Emissions Data", statisticsMenuX + 14, statisticsMenuY + statisticsOptionH / 2);
+
+  if (cancelledOrDelayedHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("Cancelled/Delayed", statisticsMenuX + 14, statisticsMenuY + statisticsOptionH + statisticsOptionH / 2);
+
+  if (heatMapHover) {
+    fill(255, 150, 200);
+  } else {
+    fill(255);
+  }
+  text("Popular", statisticsMenuX + 14, statisticsMenuY + (statisticsOptionH * 2) + statisticsOptionH / 2);
+
+  stroke(255, 255, 255, 80);
+  line(statisticsMenuX, statisticsMenuY + statisticsOptionH, statisticsMenuX + statisticsMenuW, statisticsMenuY + statisticsOptionH);
+  line(statisticsMenuX, statisticsMenuY + (statisticsOptionH * 2), statisticsMenuX + statisticsMenuW, statisticsMenuY + (statisticsOptionH * 2));
+  noStroke();
 }
 
 void mousePressed() {
@@ -78,7 +148,16 @@ void mousePressed() {
   if (faqHover) {
     println("FAQ clicked - navigate to FAQ page");
   }
-  if (emissionsHover) {
+  if (emissionsDataHover) {
     println("Emissions Data clicked - navigate to emissions page");
+  }
+  if (cancelledOrDelayedHover) {
+    println("Cancelled or Delayed clicked - navigate to delay page");
+  }
+  if (heatMapHover) {
+    println("Heat Map clicked - navigate to heat map page");
+  }
+  if (emissionsHover && !statisticsMenuHover) {
+    println("Statistics clicked - open statistics menu");
   }
 }
