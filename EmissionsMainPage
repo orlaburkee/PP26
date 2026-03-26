@@ -1,0 +1,87 @@
+PFont titleFont;
+PFont bodyFont;
+
+void setup() {
+  size(1200, 700);
+  smooth();
+
+  // Using project fonts
+  titleFont = createFont("Serif", 80);
+  bodyFont = createFont("SansSerif", 18);
+}
+
+void draw() {
+  background(250);
+
+  // Header
+  fill(200, 21, 58);
+  textFont(bodyFont);
+  textSize(18);
+  textAlign(LEFT, TOP);
+  text("FEMIRATES", 40, 36);
+
+  fill(20);
+  textFont(titleFont);
+  textSize(72);
+  text("Flight", 40, 76);
+  fill(200, 21, 58);
+  text("Emissions", 40, 156);
+  fill(20);
+  text("Overview", 40, 236);
+
+  // Flight summary card
+  noStroke();
+  fill(255);
+  rect(520, 80, 620, 190, 14);
+
+  fill(40);
+  textFont(bodyFont);
+  textSize(24);
+  text("Flight EK202  •  Miami (MIA) → New York (JFK)", 550, 112);
+
+  fill(120);
+  textSize(16);
+  text("Date: Mar 26, 2026", 550, 154);
+  text("Aircraft: Boeing 777-300ER", 550, 180);
+  text("Distance: 1,090 miles (1,753 km)", 550, 206);
+  text("Passengers: 325", 550, 232);
+
+  // Emissions metrics cards
+  drawMetricCard(520, 300, 190, 140, "Total CO2", "108.4 t");
+  drawMetricCard(735, 300, 190, 140, "Per Passenger", "334 kg");
+  drawMetricCard(950, 300, 190, 140, "Per Mile", "15.8 kg");
+
+  // Breakdown section
+  fill(255);
+  rect(520, 470, 620, 170, 14);
+
+  fill(40);
+  textSize(22);
+  text("Estimated Emissions Breakdown", 550, 500);
+
+  fill(90);
+  textSize(16);
+  text("• Fuel burn contribution: 87.3 t CO2", 550, 538);
+  text("• Ground operations: 9.1 t CO2", 550, 566);
+  text("• Taxi and Power: 12.0 t CO2", 550, 594);
+
+  fill(125);
+  textSize(14);
+  text("Method: distance-based estimate for one completed long-haul flight.", 40, 640);
+
+  noLoop();
+}
+
+void drawMetricCard(float x, float y, float w, float h, String label, String value) {
+  fill(255);
+  rect(x, y, w, h, 12);
+
+  fill(130);
+  textFont(bodyFont);
+  textSize(15);
+  text(label, x + 18, y + 24);
+
+  fill(200, 21, 58);
+  textSize(34);
+  text(value, x + 18, y + 70);
+}
