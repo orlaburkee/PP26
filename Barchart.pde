@@ -128,7 +128,7 @@ void drawBars() {
     //category label
     fill(textColor, 200);
     textAlign(CENTER, TOP);
-    textSize(18);
+    textSize(12);
     text(labels[i], x + barW / 2, height - marginBottom + 8);
     
     //y axis label
